@@ -25,19 +25,24 @@ function init() {
     camera.position.z = 500;
     scene.add(camera);
 
-    geometry = new THREE.BoxGeometry(200, 200, 200);
+    geometry = new THREE.BoxGeometry(100, 100, 100);
     material = new THREE.MeshPhongMaterial( { ambient: 0x00fff0, color: 0x544f55, specular: 0xff5544, shininess: 100,shading: THREE.SmoothShading } );
 
     controls = new THREE.TrackballControls(camera);
 		controls.addEventListener( 'change', render);
 
-    scene.add(b);
 
 
 
-
+    for (var i = 0;i<100;i++){
     mesh = new THREE.Mesh(geometry, material);
+    mesh.position.x = ( Math.random() - 0.5) * 1000;
+    mesh.position.y = ( Math.random() - 0.5) * 1000;
+    mesh.position.z = ( Math.random() - 0.5) * 1000;
+    mesh.rotation.x += 0.01;
+    mesh.rotation.y += 0.02;
     scene.add(mesh);
+  	}
 
     scene.add( new THREE.AmbientLight( 0x000000 ) );
 
@@ -48,7 +53,7 @@ function init() {
     scene.add( light1 );
     scene.add( light2 );
 
-    var amlight = new THREE.AmbientLight( 0x343434 ); // soft white light
+    var amlight = new THREE.AmbientLight( 0xff00ff ); // soft white light
 		scene.add( amlight );
 
     renderer = new THREE.WebGLRenderer();
@@ -68,9 +73,6 @@ function animate() {
 function render() {
 
     var time = Date.now() * 0.0005;
-
-    mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.02;
 
     renderer.render(scene, camera);
 
