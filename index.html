@@ -13,10 +13,6 @@
 
 		var camera, scene, renderer, geometry, material, mesh, light1, controls;
 
-init();
-animate();
-render();
-
 function init() {
 
     scene = new THREE.Scene();
@@ -25,33 +21,31 @@ function init() {
     camera.position.z = 500;
     scene.add(camera);
 
-    geometry = new THREE.BoxGeometry(100, 100, 100);
-    material = new THREE.MeshPhongMaterial( { ambient: 0x00fff0, color: 0x544f55, specular: 0xff5544, shininess: 100,shading: THREE.SmoothShading } );
+    geometry = new THREE.SphereGeometry(75);
+    material = new THREE.MeshNormalMaterial( { color: 'white' } );
 
     controls = new THREE.TrackballControls(camera);
 		controls.addEventListener( 'change', render);
 
 
-
-
+ 
+//loop to generate boxes
     for (var i = 0;i<100;i++){
     mesh = new THREE.Mesh(geometry, material);
-    mesh.position.x = ( Math.random() - 0.5) * 1000;
+    mesh.position.x = ( Math.random() - 0.5)  * 1000;
     mesh.position.y = ( Math.random() - 0.5) * 1000;
     mesh.position.z = ( Math.random() - 0.5) * 1000;
-    mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.02;
     scene.add(mesh);
   	}
 
     scene.add( new THREE.AmbientLight( 0x000000 ) );
 
-    light1 = new THREE.PointLight( 0xff0040, 1, 5000 );
-    light1.position.set( 100, 700, 500 );
-    light2 = new THREE.PointLight( 0xff0040, 1, 5000 );
-    light2.position.set( 400, 200, 500 );
-    scene.add( light1 );
-    scene.add( light2 );
+  	for (var i = 0;i<10;i++){
+
+	    light1 = new THREE.PointLight( 0xff0040, 1, 5000 );
+	    light1.position.set( (( Math.random() - 0.5) * 1000), (( Math.random() - 0.5) * 1000), (( Math.random() - 0.5) * 1000) );
+	    scene.add( light1 );
+  	}
 
     var amlight = new THREE.AmbientLight( 0xff00ff ); // soft white light
 		scene.add( amlight );
@@ -75,8 +69,14 @@ function render() {
     var time = Date.now() * 0.0005;
 
     renderer.render(scene, camera);
+    mesh.rotation.x += 0.01;
+   	mesh.rotation.y += 0.02;
 
 }
+
+init();
+animate();
+render();
 		</script>
 	</body>
 </html>
